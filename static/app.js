@@ -1403,6 +1403,12 @@ async function buildHabitat(addHistory = true) {
 
         renderStep3(report);
 
+        // Count a successful, user-initiated build once. Do not count refresh,
+        // cached report restoration, or automatic recovery after navigation.
+        if (addHistory && typeof window.umami?.track === "function") {
+            window.umami.track("habitat_completed");
+        }
+
         showScreen(step3Screen, addHistory);
     } catch (error) {
         console.error(error);

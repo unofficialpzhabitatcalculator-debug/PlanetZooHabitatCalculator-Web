@@ -171,7 +171,9 @@ def index():
 
     return render_template(
         "index.html",
-        image_credits=load_image_credits()
+        image_credits=load_image_credits(),
+        umami_website_id=os.environ.get("UMAMI_WEBSITE_ID", "5f125909-3cd2-44ce-bd6e-60ff4267d2b0").strip(),
+        umami_script_url=os.environ.get("UMAMI_SCRIPT_URL", "https://cloud.umami.is/script.js").strip()
     )
 
 
