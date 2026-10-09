@@ -19,6 +19,10 @@
         href="{{ url_for('static', filename='style.css', v='1.7.3.2-phase3.1') }}"
     >
 
+    {% if umami_website_id %}
+    <!-- Privacy-focused analytics; configured with a website ID in Render. -->
+    <script defer src="{{ umami_script_url | e }}" data-website-id="{{ umami_website_id | e }}"></script>
+    {% endif %}
 </head>
 
 <body>
