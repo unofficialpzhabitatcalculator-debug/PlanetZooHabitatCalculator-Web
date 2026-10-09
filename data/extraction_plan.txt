@@ -1,0 +1,277 @@
+EXTRACTION PLAN — V1
+
+Goal:
+Convert DataSheet.csv → individual species JSON files using species_template.json and species_schema.txt.
+
+This plan defines:
+- Which fields to extract
+- How to name each species JSON file
+- Where the output JSON files will be stored
+- The order of extraction steps
+
+Output folder:
+App_Skeleton/data/species_json/
+
+Extraction order:
+1. Read species_schema.txt
+2. For each species row in DataSheet.csv:
+   - Create a new JSON file using species_template.json
+   - Fill each field from the CSV
+3. Save JSON as: <Species>.json
+
+No logic. No calculations. No validation. Only extraction.
+
+FILE NAMING RULES — V1
+
+Each species JSON file must be named exactly as the Species field appears in DataSheet.csv, with ".json" appended.
+
+Examples:
+African Elephant → African Elephant.json
+Arctic Wolf → Arctic Wolf.json
+Bengal Tiger → Bengal Tiger.json
+
+Rules:
+- Use exact capitalization from the CSV
+- Use spaces exactly as they appear
+- Do not replace spaces with underscores
+- Do not abbreviate species names
+- Do not add prefixes or suffixes
+- Only add ".json" at the end
+
+Output path:
+App_Skeleton/data/species_json/<Species>.json
+
+EXTRACTION RULES — V1
+
+For each species row in DataSheet.csv:
+
+Map CSV columns → JSON fields using species_schema.txt.
+
+Required mappings:
+
+Species → Species
+Temp Min (C) → TEMP_MIN_C
+Temp Max (C) → TEMP_MAX_C
+
+Land Base (m2) → LAND_BASE_M2
+Land Per Adult (m2) → LAND_PER_ADULT_M2
+Land Per Juvenile (m2) → LAND_PER_JUV_M2
+
+Water Base (m2) → WATER_BASE_M2
+Water Per Adult (m2) → WATER_PER_ADULT_M2
+Water Per Juvenile (m2) → WATER_PER_JUV_M2
+
+Deep Water Base (m2) → DEEP_WATER_BASE_M2
+Deep Water Per Adult (m2) → DEEP_WATER_PER_ADULT_M2
+Deep Water Per Juvenile (m2) → DEEP_WATER_PER_JUV_M2
+
+Short Grass Min (%) → ShortGrass_Min
+Short Grass Max (%) → ShortGrass_Max
+Long Grass Min (%) → LongGrass_Min
+Long Grass Max (%) → LongGrass_Max
+Soil Min (%) → Soil_Min
+Soil Max (%) → Soil_Max
+Rock Min (%) → Rock_Min
+Rock Max (%) → Rock_Max
+Sand Min (%) → Sand_Min
+Sand Max (%) → Sand_Max
+Snow Min (%) → Snow_Min
+Snow Max (%) → Snow_Max
+
+No calculations.
+No conversions.
+No validation.
+Only direct field mapping.
+
+VALIDATION RULES — V1
+
+After mapping CSV → JSON fields, apply these checks:
+
+1. Temperature Validation
+   - TEMP_MIN_C must be ≤ TEMP_MAX_C
+   - If TEMP_MIN_C > TEMP_MAX_C → mark species as INVALID_TEMP
+
+2. Terrain Validation
+   - For each terrain type:
+       Min ≤ Max
+       If Min > Max → mark species as INVALID_TERRAIN_RANGE
+   - Sum of all terrain Min values must be ≤ 100
+       If > 100 → mark species as INVALID_TERRAIN_SUM
+
+3. Area Validation
+   - All area fields must be numeric
+   - If any area field is blank or non-numeric → mark species as INVALID_AREA
+
+4. Required Fields
+   - Species name must not be blank
+   - TEMP_MIN_C and TEMP_MAX_C must not be blank
+   - All Min/Max terrain fields must not be blank
+
+5. Output
+   - If any validation fails, still generate the JSON file
+   - Add a field: "ValidationStatus": "OK" or "ERROR"
+   - Add a field: "ValidationNotes": "<list of issues>"
+
+AUTOMATION METHOD — V1
+
+Extraction will be automated using a simple script (language chosen later).
+
+Script responsibilities:
+1. Load species_schema.txt
+2. Load species_template.json
+3. Load DataSheet.csv
+4. For each row in the CSV:
+   - Create a new JSON object based on species_template.json
+   - Apply field mappings (Extraction Rules)
+   - Apply validation checks (Validation Rules)
+   - Write JSON file to /species_json/<Species>.json
+
+No UI.
+No app integration.
+No logic calculations.
+Only data extraction and validation.
+
+Automation will be implemented in Step 22.
+
+PRE-EXTRACTION SANITY CHECKS — V1
+
+Before running extraction, verify:
+
+1. Required Files Exist
+   - DataSheet.csv
+   - species_schema.txt
+   - species_template.json
+   - extraction_plan.txt
+
+2. Required Folders Exist
+   - /App_Skeleton/data/species_json/
+
+3. CSV Structure Check
+   - CSV has header row
+   - All required columns exist:
+       Species
+       Temp Min (C)
+       Temp Max (C)
+       Land Base (m2)
+       Land Per Adult (m2)
+       Land Per Juvenile (m2)
+       Water Base (m2)
+       Water Per Adult (m2)
+       Water Per Juvenile (m2)
+       Deep Water Base (m2)
+       Deep Water Per Adult (m2)
+       Deep Water Per Juvenile (m2)
+       Short Grass Min (%)
+       Short Grass Max (%)
+       Long Grass Min (%)
+       Long Grass Max (%)
+       Soil Min (%)
+       Soil Max (%)
+       Rock Min (%)
+       Rock Max (%)
+       Sand Min (%)
+       Sand Max (%)
+       Snow Min (%)
+       Snow Max (%)
+
+4. Template Structure Check
+   - species_template.json contains all fields listed in species_schema.txt
+
+5. Schema Consistency Check
+   - species_schema.txt matches the fields expected by the extraction rules
+
+If any sanity check fails:
+   - Do not run extraction
+   - Output: "SANITY CHECK FAILED"
+   - List missing files, missing columns, or mismatched fields
+
+POST-EXTRACTION CHECKS — V1
+
+After all species JSON files are generated:
+
+1. File Count Check
+   - Count files in /species_json/
+   - Must equal number of species rows in DataSheet.csv
+   - If mismatch → "ERROR: FILE COUNT MISMATCH"
+
+2. Required Field Check
+   - For each JSON file:
+       - Ensure all fields from species_schema.txt exist
+       - Ensure no fields are missing or null
+   - If missing fields → "ERROR: MISSING FIELDS"
+
+3. ValidationStatus Check
+   - Count how many species have ValidationStatus = "ERROR"
+   - Output summary:
+       - Total species
+       - Total OK
+       - Total ERROR
+   - If any ERROR → list species names with issues
+
+4. JSON Format Check
+   - Ensure each file is valid JSON
+   - If invalid → "ERROR: MALFORMED JSON"
+
+5. Spot Check (Manual)
+   - Randomly open 3–5 species JSON files
+   - Confirm values match CSV rows
+
+6. Final Output
+   - If all checks pass → "POST-EXTRACTION CHECKS PASSED"
+   - If any fail → "POST-EXTRACTION CHECKS FAILED"
+
+EXTRACTION LOG FORMAT — V1
+
+During extraction, create a log file:
+App_Skeleton/data/extraction_log.txt
+
+Log entries must follow this format:
+
+----------------------------------------
+[Timestamp] START EXTRACTION
+----------------------------------------
+
+For each species:
+[Timestamp] Species: <Name>
+[Timestamp] Mapping: OK or ERROR
+[Timestamp] ValidationStatus: OK or ERROR
+[Timestamp] Notes: <list of issues or "None">
+
+If mapping fails:
+[Timestamp] ERROR: Mapping failure for <Name>
+
+If validation fails:
+[Timestamp] ERROR: Validation failure for <Name>
+
+If JSON write fails:
+[Timestamp] ERROR: Write failure for <Name>
+
+----------------------------------------
+[Timestamp] EXTRACTION COMPLETE
+Total Species: <number>
+Files Generated: <number>
+Validation OK: <number>
+Validation ERROR: <number>
+----------------------------------------
+
+Log file must be plain text.
+Log file must append, not overwrite.
+
+AUTOMATION LANGUAGE — V1
+
+Extraction will be implemented using Python.
+
+Reason:
+- Native CSV handling (csv module)
+- Native JSON handling (json module)
+- Simple file I/O
+- Easy validation logic
+- Cross-platform
+- Minimal setup
+- Ideal for batch processing 167 species
+
+Script file will be created later as:
+App_Skeleton/data/extract_species.py
+
+No code will be written until Step 23.
+

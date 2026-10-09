@@ -1,0 +1,30 @@
+{
+  "Species": "",
+  "TEMP_MIN_C": 0,
+  "TEMP_MAX_C": 0,
+
+  "LAND_BASE_M2": 0,
+  "LAND_PER_ADULT_M2": 0,
+  "LAND_PER_JUV_M2": 0,
+
+  "WATER_BASE_M2": 0,
+  "WATER_PER_ADULT_M2": 0,
+  "WATER_PER_JUV_M2": 0,
+
+  "DEEP_WATER_BASE_M2": 0,
+  "DEEP_WATER_PER_ADULT_M2": 0,
+  "DEEP_WATER_PER_JUV_M2": 0,
+
+  "ShortGrass_Min": 0,
+  "ShortGrass_Max": 0,
+  "LongGrass_Min": 0,
+  "LongGrass_Max": 0,
+  "Soil_Min": 0,
+  "Soil_Max": 0,
+  "Rock_Min": 0,
+  "Rock_Max": 0,
+  "Sand_Min": 0,
+  "Sand_Max": 0,
+  "Snow_Min": 0,
+  "Snow_Max": 0
+}

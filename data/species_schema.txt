@@ -1,0 +1,35 @@
+This file defines the fields that will be extracted from DataSheet.csv
+for use in the app’s species JSON.
+
+No logic. No calculations. Only field names.
+
+
+Species
+TEMP_MIN_C
+TEMP_MAX_C
+LAND_BASE_M2
+LAND_PER_ADULT_M2
+LAND_PER_JUV_M2
+WATER_BASE_M2
+WATER_PER_ADULT_M2
+WATER_PER_JUV_M2
+DEEP_WATER_BASE_M2
+DEEP_WATER_PER_ADULT_M2
+DEEP_WATER_PER_JUV_M2
+
+
+ShortGrass_Min
+ShortGrass_Max
+LongGrass_Min
+LongGrass_Max
+Soil_Min
+Soil_Max
+Rock_Min
+Rock_Max
+Sand_Min
+Sand_Max
+Snow_Min
+Snow_Max
+
+
+

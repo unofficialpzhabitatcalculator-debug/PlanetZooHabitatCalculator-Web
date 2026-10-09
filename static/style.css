@@ -1,0 +1,1102 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    background: #151515;
+    color: #eeeeee;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+select,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.screen {
+    display: none;
+    min-height: 100vh;
+}
+
+.active-screen {
+    display: block;
+}
+
+.app-page {
+    width: min(100%, 1050px);
+    min-height: 100vh;
+    margin: 0 auto;
+    background: #ffffff;
+    color: #111111;
+    border-left: 1px solid #b7b7b7;
+    border-right: 1px solid #b7b7b7;
+}
+
+
+/* ============================================================= */
+/* LAUNCH                                                        */
+/* ============================================================= */
+
+#launch-screen {
+    background:
+        linear-gradient(
+            180deg,
+            #1c1c1c 0%,
+            #111111 100%
+        );
+}
+
+.launch-container {
+    width: min(100%, 900px);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 70px 40px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.launch-title {
+    width: 100%;
+    text-align: center;
+}
+
+.launch-title h1 {
+    margin: 0;
+    font-size: clamp(42px, 7vw, 76px);
+    font-weight: 900;
+    letter-spacing: 4px;
+}
+
+.launch-title h2 {
+    margin: 8px 0 0;
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.subtitle {
+    margin-top: 18px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #c8c8c8;
+}
+
+.launch-buttons {
+    width: min(100%, 420px);
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.menu-button {
+    width: 100%;
+    min-height: 58px;
+    border: 2px solid #dddddd;
+    border-radius: 4px;
+    background: #262626;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.primary-button {
+    background: #eeeeee;
+    color: #111111;
+}
+
+.launch-footer {
+    width: min(100%, 700px);
+    margin-top: 40px;
+    text-align: center;
+    color: #a9a9a9;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* ============================================================= */
+/* HEADERS                                                       */
+/* ============================================================= */
+
+.step-header {
+    min-height: 92px;
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: 55px 1fr 55px;
+    align-items: center;
+    background: #222222;
+    color: #ffffff;
+    border-bottom: 4px solid #555555;
+}
+
+.header-button {
+    width: 44px;
+    height: 44px;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    background: #333333;
+    color: #ffffff;
+    font-size: 34px;
+}
+
+.header-title {
+    text-align: center;
+}
+
+.header-title h1 {
+    margin: 3px 0 0;
+    font-size: clamp(18px, 3vw, 26px);
+    letter-spacing: 1px;
+}
+
+.step-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #bbbbbb;
+}
+
+
+/* ============================================================= */
+/* STEP 1                                                        */
+/* ============================================================= */
+
+.alphabet-filter {
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    gap: 4px;
+    background: #dedede;
+    border-bottom: 1px solid #999999;
+}
+
+.alphabet-filter button {
+    min-height: 32px;
+    border: 1px solid #999999;
+    background: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.species-list {
+    padding-bottom: 90px;
+}
+
+.loading-message {
+    padding: 50px 20px;
+    text-align: center;
+    color: #666666;
+}
+
+.species-card {
+    border-bottom: 1px solid #9c9c9c;
+}
+
+.species-row {
+    min-height: 52px;
+    padding: 0 16px;
+    display: grid;
+    grid-template-columns: 42px 1fr 42px;
+    align-items: center;
+}
+
+.expand-button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #777777;
+    background: #eeeeee;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.species-name {
+    padding-left: 5px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.selection-marker {
+    width: 28px;
+    height: 28px;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #777777;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.species-card.selected .selection-marker {
+    background: #222222;
+    color: #ffffff;
+}
+
+.species-details {
+    display: none;
+    padding: 18px;
+    background: #f1f1f1;
+    border-top: 1px solid #bbbbbb;
+}
+
+.species-card.expanded .species-details {
+    display: block;
+}
+
+.detail-top {
+    display: grid;
+    grid-template-columns:
+        minmax(200px, 0.9fr)
+        minmax(320px, 1.4fr);
+    gap: 22px;
+}
+
+.species-image {
+    min-height: 210px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #777777;
+    background: #d8d8d8;
+    color: #555555;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.species-image img {
+    width: 100%;
+    height: 210px;
+    display: block;
+    object-fit: contain;
+    object-position: center center;
+    background: #d8d8d8;
+}
+
+.species-image.image-unavailable {
+    text-align: center;
+}
+
+.species-flags {
+    min-height: 30px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.biome-tag {
+    padding: 5px 10px;
+    border: 1px solid #777777;
+    background: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.predator-tag {
+    padding: 5px 10px;
+    border: 1px solid #8d0000;
+    background: #c70000;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.group-title {
+    margin: 0 0 9px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #777777;
+    font-size: 18px;
+}
+
+.group-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.group-table th,
+.group-table td {
+    padding: 7px 6px;
+    border-bottom: 1px solid #c3c3c3;
+    text-align: left;
+}
+
+.group-table th {
+    width: 115px;
+}
+
+.species-controls {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 12px;
+}
+
+.control-label,
+.popup-control label {
+    margin-bottom: 5px;
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.group-select {
+    width: 100%;
+    height: 42px;
+    padding: 0 8px;
+    border: 1px solid #777777;
+    background: #ffffff;
+}
+
+.number-stepper {
+    height: 42px;
+    display: grid;
+    grid-template-columns: 40px 1fr 40px;
+    border: 1px solid #777777;
+    background: #ffffff;
+}
+
+.number-stepper button {
+    border: 0;
+    background: #dedede;
+    font-weight: 900;
+}
+
+.number-value {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    padding: 0 8px;
+    background: #ffffff;
+    color: #000000;
+    font: inherit;
+    font-weight: 800;
+    text-align: center;
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.number-value:focus {
+    outline: 2px solid #333333;
+    outline-offset: -2px;
+}
+
+.number-value::-webkit-inner-spin-button,
+.number-value::-webkit-outer-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+}
+
+.species-actions {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.discard-button,
+.add-button {
+    min-height: 46px;
+    border: 2px solid #333333;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.discard-button {
+    background: #ffffff;
+}
+
+.add-button {
+    background: #222222;
+    color: #ffffff;
+}
+
+
+/* ============================================================= */
+/* STEP 1 FOOTER                                                 */
+/* ============================================================= */
+
+.step-footer {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    width: min(100%, 1050px);
+    transform: translateX(-50%);
+    min-height: 70px;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #222222;
+    color: #ffffff;
+    border-top: 3px solid #555555;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.continue-button {
+    min-width: 160px;
+    min-height: 45px;
+    border: 1px solid #eeeeee;
+    background: #eeeeee;
+    font-weight: 900;
+}
+
+.continue-button:disabled {
+    opacity: 0.35;
+}
+
+
+/* ============================================================= */
+/* STEP 2                                                        */
+/* ============================================================= */
+
+.step2-page {
+    padding-bottom: 90px;
+}
+
+.step2-warning-area {
+    display: none;
+}
+
+.step2-warning-area.has-warning {
+    display: block;
+    background: #d00000;
+    color: #ffffff;
+    border-bottom: 3px solid #900000;
+}
+
+.step2-top-warning {
+    padding: 10px 22px;
+}
+
+.warning-title {
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.warning-description {
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.step2-instructions {
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 0.35fr);
+    align-items: center;
+    gap: 20px;
+    background: #dedede;
+    border-bottom: 1px solid #999999;
+    font-size: 13px;
+}
+
+.enrichment-column-heading {
+    text-align: right;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+}
+
+.summary-species-row {
+    min-height: 82px;
+    padding: 13px 22px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 0.35fr);
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid #999999;
+}
+
+.summary-name-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.summary-color-box {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    border: 1px solid #555555;
+}
+
+.summary-species-name {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #111111;
+    text-align: left;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.summary-counts {
+    margin-top: 7px;
+    margin-left: 26px;
+    color: #555555;
+    font-size: 13px;
+}
+
+.summary-enrichment {
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.enrichment-check {
+    font-size: 23px;
+    font-weight: 900;
+}
+
+.species-warning-icon {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #d00000;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.summary-predator {
+    padding: 4px 7px;
+    background: #c40000;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+
+/* ============================================================= */
+/* STEP 2 FOOTER                                                 */
+/* ============================================================= */
+
+.step2-footer,
+.step3-footer {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    width: min(100%, 1050px);
+    transform: translateX(-50%);
+    min-height: 70px;
+    padding: 10px 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    background: #222222;
+    border-top: 3px solid #555555;
+}
+
+.go-back-button,
+.build-button {
+    min-height: 46px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.go-back-button {
+    border: 2px solid #eeeeee;
+    background: #222222;
+    color: #ffffff;
+}
+
+.build-button {
+    border: 2px solid #eeeeee;
+    background: #eeeeee;
+    color: #111111;
+}
+
+
+/* ============================================================= */
+/* STEP 3                                                        */
+/* ============================================================= */
+
+.step3-page {
+    padding-bottom: 95px;
+}
+
+.step3-warning-area {
+    display: none;
+    background: #d00000;
+    color: #ffffff;
+}
+
+.step3-warning-area.visible {
+    display: block;
+}
+
+.step3-warning {
+    padding: 11px 22px;
+    border-bottom: 1px solid #ff7777;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.overview-notes {
+    display: none;
+    padding: 15px 22px;
+    background: #f2df84;
+    color: #111111;
+    border-bottom: 2px solid #8d7a1d;
+    font-size: 13px;
+}
+
+.overview-notes strong {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 15px;
+}
+
+.overview-section {
+    border-bottom: 1px solid #8f8f8f;
+}
+
+.overview-section h2 {
+    margin: 0;
+    padding: 10px 22px;
+    background: #dedede;
+    border-bottom: 1px solid #999999;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+.overview-value {
+    padding: 18px 22px;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+
+/* ============================================================= */
+/* STEP 3 SPECIES + ENRICHMENT                                  */
+/* ============================================================= */
+
+.overview-species-heading {
+    display: grid;
+    grid-template-columns:
+        18px
+        minmax(0, 1fr)
+        minmax(100px, auto);
+    align-items: center;
+    gap: 10px;
+}
+
+.overview-species-heading > span:first-child {
+    grid-column: 1 / 3;
+}
+
+.overview-species-heading .enrichment-column-heading {
+    grid-column: 3;
+}
+
+.overview-species {
+    padding: 5px 0;
+}
+
+.overview-species-row {
+    min-height: 55px;
+    padding: 9px 22px;
+    display: grid;
+    grid-template-columns:
+        18px
+        minmax(0, 1fr)
+        minmax(100px, auto);
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.overview-species-row:last-child {
+    border-bottom: 0;
+}
+
+.overview-small {
+    margin-top: 3px;
+    color: #555555;
+    font-size: 12px;
+}
+
+.overview-enrichment {
+    justify-self: end;
+}
+
+
+/* ============================================================= */
+/* STEP 3 INFORMATION GRIDS                                     */
+/* ============================================================= */
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.overview-grid-item {
+    min-height: 80px;
+    padding: 14px 18px;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+}
+
+.overview-label {
+    margin-bottom: 8px;
+    color: #555555;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.overview-number {
+    font-size: 19px;
+    font-weight: 900;
+}
+
+.incompatible-box {
+    background: #ffe3e3;
+    color: #b00000;
+}
+
+.incompatible-value {
+    color: #c40000;
+    font-weight: 900;
+}
+
+
+/* ============================================================= */
+/* STEP 3 GROUP SIZE REQUIREMENTS                               */
+/* ============================================================= */
+
+.overview-groups {
+    padding: 0 22px 18px;
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    column-gap: 28px;
+}
+
+.overview-group-card {
+    padding: 13px 0;
+    border-bottom: 1px solid #cccccc;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.overview-group-name {
+    font-size: 15px;
+    font-weight: 900;
+}
+
+
+/* ============================================================= */
+/* MODALS                                                        */
+/* ============================================================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.modal-overlay.visible {
+    display: flex;
+}
+
+.modal {
+    position: relative;
+    width: min(100%, 520px);
+    padding: 30px;
+    border: 3px solid #333333;
+    background: #ffffff;
+    color: #111111;
+}
+
+.modal h2 {
+    margin-top: 0;
+}
+
+.modal-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    background: transparent;
+    font-size: 28px;
+}
+
+.popup-warning {
+    display: none;
+}
+
+.popup-warning.visible {
+    display: block;
+    margin: 12px 0 18px;
+    padding: 12px;
+    background: #c40000;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.popup-section {
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 2px solid #777777;
+}
+
+.popup-section h3 {
+    margin: 0 0 15px;
+    font-size: 15px;
+}
+
+.popup-population {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.popup-actions {
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.popup-remove-button,
+.popup-apply-button {
+    min-height: 46px;
+    font-weight: 900;
+}
+
+.popup-remove-button {
+    border: 2px solid #a00000;
+    background: #ffffff;
+    color: #a00000;
+}
+
+.popup-apply-button {
+    border: 2px solid #222222;
+    background: #222222;
+    color: #ffffff;
+}
+
+
+/* ============================================================= */
+/* RESPONSIVE                                                    */
+/* ============================================================= */
+
+@media (max-width: 700px) {
+
+    .launch-container {
+        padding: 45px 20px 20px;
+    }
+
+    .app-page {
+        border: 0;
+    }
+
+    .step-header {
+        grid-template-columns: 45px 1fr 45px;
+        padding: 10px 8px;
+    }
+
+    .alphabet-filter {
+        grid-template-columns: repeat(7, 1fr);
+        padding: 8px;
+    }
+
+    .detail-top {
+        grid-template-columns: 1fr;
+    }
+
+    .species-image {
+        min-height: 170px;
+    }
+
+    .species-image img {
+        height: 170px;
+    }
+
+    .species-controls {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .species-controls
+    .control-block:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .summary-species-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .summary-enrichment {
+        justify-content: flex-start;
+        margin-left: 26px;
+    }
+
+    .step2-instructions {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .step2-instructions .enrichment-column-heading {
+        margin-left: 26px;
+        text-align: left;
+    }
+
+    .popup-population {
+        grid-template-columns: 1fr;
+    }
+
+    .overview-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .overview-species-heading {
+        grid-template-columns:
+            18px
+            minmax(0, 1fr);
+    }
+
+    .overview-species-heading > span:first-child {
+        grid-column: 1 / 3;
+    }
+
+    .overview-species-heading .enrichment-column-heading {
+        grid-column: 2;
+        text-align: left;
+    }
+
+    .overview-species-row {
+        grid-template-columns:
+            18px
+            minmax(0, 1fr);
+    }
+
+    .overview-enrichment {
+        grid-column: 2;
+        justify-self: start;
+        margin-left: 0;
+    }
+
+    .overview-groups {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+    }
+
+}
+
+/* CREDITS */
+.credits-page { width: min(100%, 1050px); margin: 0 auto; padding: 32px 24px; }
+.credits-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.credits-header h1 { margin: 0; }
+.credits-header .menu-button { width: auto; min-width: 130px; }
+#credits-search { display: block; width: 100%; margin-top: 10px; padding: 12px; border: 1px solid #999; border-radius: 4px; }
+.credit-entry { padding: 16px 0; border-bottom: 1px solid #555; }
+.credit-entry h2 { margin: 0 0 12px; font-size: 20px; }
+.credit-entry dl { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 8px 16px; margin: 0; }
+.credit-entry dt { font-weight: bold; }
+.credit-entry dd { margin: 0; overflow-wrap: anywhere; }
+.credits-page a { color: #93caff; }
+.credits-page button:focus-visible, .credits-page a:focus-visible, #credits-search:focus-visible { outline: 3px solid #ffce54; outline-offset: 3px; }
+@media (max-width: 480px) { .credit-entry dl { grid-template-columns: 1fr; gap: 4px; } .credit-entry dd { margin-bottom: 8px; } }
+
+
+/* Persistent S1 alphabet rail: reserves space beside the species list. */
+#step1-screen .app-page { padding-right: 58px; }
+#step1-screen #alphabet-filter {
+    position: fixed;
+    right: max(0px, calc((100vw - 1050px) / 2));
+    top: 12px;
+    bottom: 100px;
+    width: 54px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 5px;
+    overflow-y: auto;
+    background: #dedede;
+    border: 1px solid #999;
+    border-radius: 4px;
+}
+#alphabet-filter button { flex: 1 0 26px; min-height: 26px; padding: 2px; }
+#alphabet-filter button[aria-pressed="true"] { background: #222; color: #fff; border-color: #222; }
+#alphabet-filter button:focus-visible { outline: 3px solid #e5a400; outline-offset: -3px; }
+
+.step2-options-hint { margin: 0; padding: 12px 16px; color: #444; font-size: 14px; }
+
+/* ============================================================= */
+/* V1.7.3.2 PHASE 3 — RESPONSIVE PHONE / TABLET REFINEMENTS       */
+/* Desktop design and calculator logic remain unchanged.          */
+/* ============================================================= */
+@media (max-width: 700px) {
+    /* Keep the letter rail within the viewport, even on narrow phones. */
+    #step1-screen .app-page { padding-right: 46px; }
+    #step1-screen #alphabet-filter {
+        right: 0;
+        top: 6px;
+        bottom: 86px;
+        width: 44px;
+        padding: 3px;
+        gap: 2px;
+    }
+    #alphabet-filter button { flex-basis: 28px; min-height: 28px; }
+    .species-row { padding: 0 8px; grid-template-columns: 34px minmax(0, 1fr) 32px; }
+    .species-name { min-width: 0; overflow-wrap: anywhere; font-size: 14px; }
+    .species-details { padding: 12px; }
+    .detail-top, .species-controls, .overview-grid { min-width: 0; }
+    .detail-top > *, .species-controls > *, .overview-grid > * { min-width: 0; }
+    .group-table { font-size: 12px; }
+    .group-table th, .group-table td { padding: 6px 3px; overflow-wrap: anywhere; }
+    .step-header .header-title { min-width: 0; }
+    .header-title h1 { overflow-wrap: anywhere; }
+    .credits-page { padding: 20px 12px; }
+}
+@media (max-width: 480px) {
+    .launch-container { padding: 34px 14px 20px; }
+    .launch-title h1 { font-size: clamp(30px, 9vw, 42px); letter-spacing: 1px; }
+    .launch-title h2 { font-size: clamp(18px, 5.5vw, 26px); letter-spacing: 1px; }
+    .subtitle { font-size: 13px; text-align: center; }
+    .menu-button { min-height: 48px; font-size: 17px; }
+    .step-header { min-height: 72px; }
+    .step-label { font-size: 10px; letter-spacing: 1px; }
+    .header-title h1 { font-size: 17px; letter-spacing: 0; }
+    .header-button { width: 40px; height: 40px; }
+    .species-controls { gap: 7px; }
+    .popup-actions { gap: 8px; }
+    .credits-header { flex-wrap: wrap; }
+    .credit-entry h2 { overflow-wrap: anywhere; }
+}
+
+/* Phase 3.1: existing habitat choice uses the established modal styling. */
+.restore-habitat-description { text-align: center; line-height: 1.6; margin: 20px 0; }
+.restore-habitat-actions { display: grid; gap: 12px; margin-top: 24px; }
+.restore-habitat-actions button { width: 100%; min-height: 48px; cursor: pointer; padding: 10px 12px; }
+@media (max-width: 480px) { .restore-habitat-actions button { font-size: 12px; } }

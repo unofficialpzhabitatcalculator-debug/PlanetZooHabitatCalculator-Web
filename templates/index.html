@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Planet Zoo Habitat Calculator
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css', v='1.7.3.2-phase3.1') }}"
+    >
+
+</head>
+
+<body>
+
+<main id="app">
+
+
+<section id="credits-screen" class="screen" aria-labelledby="credits-heading">
+    <div class="credits-page">
+        <header class="credits-header">
+            <h1 id="credits-heading" tabindex="-1">CREDITS</h1>
+            <button id="credits-back-button" class="menu-button">GO BACK</button>
+        </header>
+        <p>Species image credits and licenses, as recorded in the supplied attribution file.</p>
+        <label for="credits-search">Find a species, photographer, or license</label>
+        <input id="credits-search" type="search" placeholder="Search credits…">
+        <p id="credits-count" role="status"></p>
+        <div id="credits-list">
+        {% for credit in image_credits %}
+            <article class="credit-entry">
+                <h2>{{ credit.name }}</h2>
+                <dl>
+                {% for field in credit.fields %}
+                    <dt>{{ field.label }}</dt>
+                    <dd>{% if field.link %}<a href="{{ field.value }}" target="_blank" rel="noopener noreferrer">{{ field.value }}</a>{% else %}{{ field.value }}{% endif %}</dd>
+                {% endfor %}
+                </dl>
+            </article>
+        {% endfor %}
+        </div>
+        <p id="credits-empty" hidden>No matching credits.</p>
+        <p><a href="{{ url_for('static', filename='images/species/_image_credits.txt') }}" target="_blank" rel="noopener noreferrer">View original image credits</a></p>
+    </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- LAUNCH SCREEN                                                 -->
+<!-- ============================================================= -->
+
+<section
+    id="launch-screen"
+    class="screen active-screen"
+>
+
+    <div class="launch-container">
+
+        <div class="launch-title">
+
+            <h1>
+                PLANET ZOO
+            </h1>
+
+            <h2>
+                HABITAT CALCULATOR
+            </h2>
+
+            <p class="subtitle">
+                An UNOFFICIAL Habitat Calculator
+            </p>
+
+        </div>
+
+
+        <div class="launch-buttons">
+
+            <button
+                id="start-button"
+                class="menu-button primary-button"
+            >
+                START
+            </button>
+
+            <button
+                id="credits-button"
+                class="menu-button"
+            >
+                CREDITS
+            </button>
+
+            <button
+                id="donate-button"
+                class="menu-button"
+            >
+                DONATE
+            </button>
+
+            <button
+                id="feedback-button"
+                class="menu-button"
+            >
+                FEEDBACK
+            </button>
+
+        </div>
+
+
+        <div class="launch-footer">
+
+            <p>
+                All information contained is used under free-use
+                licensing. This application is not endorsed by,
+                and has no relation with, Frontier Developments plc or any
+                entity related to Planet Zoo.
+            </p>
+
+            <p class="version">
+                V1.7.3 -- ALL INFORMATION UP-TO-DATE AS OF
+                01.OCT.26 / BUILD 1.20.2.105774
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================= -->
+<!-- STEP 1                                                       -->
+<!-- ============================================================= -->
+
+<section
+    id="step1-screen"
+    class="screen"
+>
+
+    <div class="app-page">
+
+        <header class="step-header">
+
+            <button
+                id="step1-back-button"
+                class="header-button"
+            >
+                ‹
+            </button>
+
+            <div class="header-title">
+
+                <div class="step-label">
+                    STEP 1
+                </div>
+
+                <h1>
+                    HABITAT SPECIES SELECTION LIST
+                </h1>
+
+            </div>
+
+            <div></div>
+
+        </header>
+
+
+        <nav id="alphabet-filter" class="alphabet-filter" aria-label="Species alphabet navigation"></nav>
+
+
+        <div
+            id="species-list"
+            class="species-list"
+        >
+
+            <div class="loading-message">
+                Loading species...
+            </div>
+
+        </div>
+
+
+        <footer class="step-footer">
+
+            <div id="selected-count">
+                0 SPECIES SELECTED
+            </div>
+
+            <button
+                id="continue-button"
+                class="continue-button"
+                disabled
+            >
+                CONTINUE
+            </button>
+
+        </footer>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================= -->
+<!-- STEP 2                                                       -->
+<!-- ============================================================= -->
+
+<section
+    id="step2-screen"
+    class="screen"
+>
+
+    <div class="app-page step2-page">
+
+        <header class="step-header">
+
+            <div></div>
+
+            <div class="header-title">
+
+                <div class="step-label">
+                    STEP 2
+                </div>
+
+                <h1>
+                    HABITAT SUMMARY
+                </h1>
+
+            </div>
+
+            <div></div>
+
+        </header>
+
+
+        <div
+            id="step2-warning-area"
+            class="step2-warning-area"
+        ></div>
+
+
+        <div class="step2-instructions">
+
+            <strong>
+                SELECTED SPECIES
+            </strong>
+
+            <span class="enrichment-column-heading">
+                INTERSPECIES ENRICHMENT BONUS
+            </span>
+
+        </div>
+
+
+        <p class="step2-options-hint">Click a species name or warning icon to adjust population or remove it from the habitat.</p>
+
+        <div
+            id="summary-list"
+            class="summary-list"
+        ></div>
+
+
+        <footer class="step2-footer">
+
+            <button
+                id="go-back-button"
+                class="go-back-button"
+            >
+                GO BACK
+            </button>
+
+            <button
+                id="build-habitat-button"
+                class="build-button"
+            >
+                BUILD HABITAT
+            </button>
+
+        </footer>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================= -->
+<!-- STEP 3                                                       -->
+<!-- ============================================================= -->
+
+<section
+    id="step3-screen"
+    class="screen"
+>
+
+    <div class="app-page step3-page">
+
+        <header class="step-header">
+
+            <div></div>
+
+            <div class="header-title">
+
+                <div class="step-label">
+                    STEP 3
+                </div>
+
+                <h1>
+                    HABITAT OVERVIEW
+                </h1>
+
+            </div>
+
+            <div></div>
+
+        </header>
+
+
+        <div
+            id="step3-warning-area"
+            class="step3-warning-area"
+        ></div>
+
+
+        <div
+            id="step3-notes"
+            class="overview-notes"
+        ></div>
+
+
+        <section class="overview-section">
+
+            <h2 class="overview-species-heading">
+                <span>SPECIES</span>
+
+                <span class="enrichment-column-heading">
+                    INTERSPECIES ENRICHMENT BONUS
+                </span>
+            </h2>
+
+            <div
+                id="overview-species"
+                class="overview-species"
+            ></div>
+
+        </section>
+
+
+        <section class="overview-section">
+
+            <h2>
+                BIOME
+            </h2>
+
+            <div
+                id="overview-biomes"
+                class="overview-value"
+            ></div>
+
+        </section>
+
+
+        <section class="overview-section">
+
+            <h2>
+                TEMPERATURE
+            </h2>
+
+            <div
+                id="overview-temperature"
+                class="overview-value"
+            ></div>
+
+        </section>
+
+
+        <section class="overview-section">
+
+            <h2>
+                AREA REQUIREMENTS
+            </h2>
+
+            <div
+                id="overview-area"
+                class="overview-grid"
+            ></div>
+
+        </section>
+
+
+        <section class="overview-section">
+
+            <h2>
+                TERRAIN REQUIREMENTS
+            </h2>
+
+            <div
+                id="overview-terrain"
+                class="overview-grid"
+            ></div>
+
+        </section>
+
+
+        <section class="overview-section">
+
+            <h2>
+                BARRIER REQUIREMENT
+            </h2>
+
+            <div
+                id="overview-barrier"
+                class="overview-grid"
+            ></div>
+
+        </section>
+
+
+        <section class="overview-section">
+
+            <h2>
+                GROUP SIZE REQUIREMENTS
+            </h2>
+
+            <div
+                id="overview-groups"
+                class="overview-groups"
+            ></div>
+
+        </section>
+
+
+        <footer class="step3-footer">
+
+            <button
+                id="step3-go-back-button"
+                class="go-back-button"
+            >
+                GO BACK
+            </button>
+
+            <button
+                id="start-over-button"
+                class="build-button"
+            >
+                START OVER
+            </button>
+
+        </footer>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================= -->
+<!-- GENERAL MODAL                                                -->
+<!-- ============================================================= -->
+
+<div
+    id="modal-overlay"
+    class="modal-overlay"
+>
+
+    <div class="modal">
+
+        <button
+            id="modal-close"
+            class="modal-close"
+        >
+            ×
+        </button>
+
+        <h2 id="modal-title"></h2>
+
+        <div id="modal-content"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================= -->
+<!-- STEP 2 SPECIES POPUP                                         -->
+<!-- ============================================================= -->
+
+<div
+    id="species-popup-overlay"
+    class="modal-overlay"
+>
+
+    <div class="modal species-popup">
+
+        <button
+            id="species-popup-close"
+            class="modal-close"
+        >
+            ×
+        </button>
+
+        <h2 id="popup-species-name">
+            SPECIES
+        </h2>
+
+        <div
+            id="popup-warning"
+            class="popup-warning"
+        ></div>
+
+
+        <div class="popup-section">
+
+            <h3>
+                ADJUST HERD POPULATION
+            </h3>
+
+
+            <div class="popup-population">
+
+                <div class="popup-control">
+
+                    <label>
+                        ADULTS
+                    </label>
+
+                    <div class="number-stepper">
+
+                        <button
+                            id="popup-adults-down"
+                            type="button"
+                        >
+                            ▼
+                        </button>
+
+                        <input id="popup-adults-value" class="number-value" type="number" min="1" step="1" inputmode="numeric" value="1" aria-label="Adults count">
+
+                        <button
+                            id="popup-adults-up"
+                            type="button"
+                        >
+                            ▲
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="popup-control">
+
+                    <label>
+                        JUVENILES
+                    </label>
+
+                    <div class="number-stepper">
+
+                        <button
+                            id="popup-juveniles-down"
+                            type="button"
+                        >
+                            ▼
+                        </button>
+
+                        <input id="popup-juveniles-value" class="number-value" type="number" min="0" step="1" inputmode="numeric" value="0" aria-label="Juveniles count">
+
+                        <button
+                            id="popup-juveniles-up"
+                            type="button"
+                        >
+                            ▲
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="popup-actions">
+
+            <button
+                id="popup-remove"
+                class="popup-remove-button"
+            >
+                REMOVE FROM HABITAT
+            </button>
+
+            <button
+                id="popup-apply"
+                class="popup-apply-button"
+            >
+                APPLY
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script
+    src="{{ url_for('static', filename='app.js', v='1.7.3.2-phase3.1') }}"
+></script>
+
+</body>
+
+</html>
